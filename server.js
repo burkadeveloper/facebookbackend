@@ -16,18 +16,29 @@ const allowedOrigins = [
   'https://facebook-l5xf.vercel.app' 
 ];
 
+// --- CORS Configuration: allow any https://facebook* origin ---
 app.use(cors({
   origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps or curl)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = 'CORS policy does not allow this origin.';
-      return callback(new Error(msg), false);
+    
+    // Allow localhost for development
+    if (origin.startsWith('http://localhost') || origin.startsWith('http://127.0.0.1')) {
+      return callback(null, true);
     }
-    return callback(null, true);
+    
+    // Allow any origin that starts with 'https://facebook'
+    if (origin.startsWith('https://facebook')) {
+      return callback(null, true);
+    }
+    
+    // Block all other origins
+    const msg = 'CORS policy does not allow this origin.';
+    return callback(new Error(msg), false);
   },
-  credentials: true,
+  credentials: true, // if you use cookies/sessions
 }));
+// -----------------------------------------------------------
 // -------------------------
 
 app.use(express.json());
