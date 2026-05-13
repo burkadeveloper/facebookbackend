@@ -12,7 +12,8 @@ const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
   'https://facebook-rosy-alpha.vercel.app',
-  'https://facebook-rust-tau.vercel.app',   // <-- add this
+  'https://facebook-rust-tau.vercel.app', 
+  'https://facebook-l5xf.vercel.app' 
 ];
 
 app.use(cors({
